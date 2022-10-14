@@ -41,6 +41,7 @@ public class HomeController {
 
     @GetMapping("add")
     public String displayAddJobForm(Model model) {
+        model.addAttribute("title", "Add Job");
         model.addAttribute(new Job());
         model.addAttribute("employers", employerRepository.findAll());
         model.addAttribute("skills", skillRepository.findAll());
@@ -69,17 +70,14 @@ public class HomeController {
 
     @GetMapping("view/{jobId}")
     public String displayViewJob(Model model, @PathVariable int jobId) {
-        Optional optJob = jobRepository.findById(jobId);
+        Optional<Job> optJob = jobRepository.findById(jobId);
 
-
-        model.addAttribute("employer", "${job.employer.id}");
-        model.addAttribute("job", "${job.employer.name}");
-
-        if (int jobId = null) {
-            return "redirect";
+        if (optJob.isPresent()) {
+            Job job = optJob.get();
+            model.addAttribute("title", "Job: " + job.getName());
+            model.addAttribute("job", job);
+            model.addAttribute("skills", job.getSkills());
         }
-
-
 
         return "view";
     }
