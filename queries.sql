@@ -2,15 +2,15 @@
 SHOW COLUMNS FROM job;
 
 -- Part 2: Test it with SQL
-SELECT name from techjobs.employer
-WHERE (location = "St. Louis") OR (location = "Saint Louis");
+SELECT name FROM employer WHERE location = "St. Louis City";
 
 -- Part 3: Test it with SQL
-DROP TABLE techjobs.job;
+DROP TABLE job;
 
 -- Part 4: Test it with SQL
-SELECT techjobs.skill.name, techjobs.skill.description
+
+SELECT *
 FROM skill
 LEFT JOIN job_skills ON skill.id = job_skills.skills_id
-WHERE jobs_id IS NOT NULL
-ORDER BY skill.name;
+WHERE job_skills.jobs_id IS NOT NULL
+ORDER BY name ASC;
